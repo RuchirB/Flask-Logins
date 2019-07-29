@@ -1,0 +1,65 @@
+<DOCTYPE html>
+	<html lang='en'>
+	<head>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+      <script type='text/javascript'>
+         function loginUser() {
+				var usr=$('#username').val()
+				var psw=$('#password').val()
+				var url = "/authenticateUser/" +usr + "   " +psw
+
+				$.getJSON(url, function(server_response) {
+					console.log(server_response['chatbot_response'])
+					console.log("Getting response from " +url)
+                    var response = server_response['chatbot_response'].replace(/(?:\r\n|\r|\n)/g, '<br>')
+                    
+                    $('#chat_container').append("<div class='server_reply'> <font color='white'> "+response +"</div>");
+                }).fail(function(jqXHR, textStatus, errorThrown)  { 
+                	console.log("Couldn't get response from server, " +textStatus); })
+                .done(function() { })
+                .always(function() { });
+			}
+
+			function registerUser() {
+				var usr=$('#username').val()
+				var psw=$('#password').val()
+				var url = "/registerUser/" +usr + "   " +psw
+
+				$.getJSON(url, function(server_response) {
+					console.log(server_response['chatbot_response'])
+					console.log("Getting response from " +url)
+                    var response = server_response['chatbot_response']
+
+                    
+                    $('#chat_container').append("<div class='server_reply'> <font color='white'> "+response +"</div>");
+                }).fail(function(jqXHR, textStatus, errorThrown)  { 
+                	console.log("Couldn't get response from server, " +textStatus); })
+                .done(function() { })
+                .always(function() { });
+			}	
+		</script>
+
+		<meta charset="utf-8" />
+		<title>Newslens Chatbot</title>
+		
+	</head>
+
+	<form>
+			<p><input type=text name=username id="username">
+            <p><input type=password name=password id="password">
+	</form>
+  <button onclick="loginUser()">Login</button>  
+  <button onclick="registerUser()">Register</button>  
+
+  <body>
+      <div name = "chat_container" id='chat_container'></div>
+
+  </body>
+
+
+
+
+
+  </html>
+
